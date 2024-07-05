@@ -1,0 +1,1603 @@
+
+
+<Left_TreeViewLabel>:
+    color: 170/255, 170/255, 170/255, 1
+    font_size: 20
+    font_name: 'Arial'
+    color_selected: 25/255, 53/255, 73/255, 1
+    # Change the background color of the TreeViewItem
+    even_color: 21/255, 35/255, 45/255, 1
+    # Change the background color of the TreeViewItem
+    odd_color: 21/255, 35/255, 45/255, 1
+
+
+<MessageBox>:
+    title: ""
+    title_size: 20
+    title_align: "center"
+    auto_dismiss: False
+    size_hint: None, None
+    size: 400, 200
+
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        # Change the background color of the BoxLayout
+        canvas.before:
+            Color:
+                rgba: 21/255, 35/255, 45/255, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        # background_color: 21/255, 35/255, 45/255, 1
+
+        Label:
+            id: message_label
+            text: root.message
+            halign: "center"
+            valign: "middle"
+            size_hint_y: None
+            height: self.texture_size[1]
+            text_size: self.width - 20, None
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            padding: 10
+            spacing: 10
+
+            # Image:
+            #     source: 'images/im.png'
+            #     allow_stretch: True
+            #     keep_ratio: False
+            Button:
+                text: "Close"
+                background_normal: 'images/im.png'
+                background_down: 'images/im.png'
+
+                on_press: root.dismiss()
+
+
+
+<Model_Tabbed_Panel>
+
+    canvas.before:
+        Color:
+            rgba: 21/255, 35/255, 45/255, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+
+<Input_Tabbed_Panel>
+    do_default_tab: False
+    tab_width: 150
+    tab_height: 40
+    tab_pos: 'top_left'
+    size_hint_y: 1
+    size_hint_x: 1
+    canvas.before:
+        Color:
+            rgba: 21/255, 35/255, 45/255, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Input_Tabbed_Panel_Item>:
+
+    type_label: type_label
+    description_label: description_label
+    background_normal: 'images/normal_tab.png'
+    # background_color: 21/255, 35/255, 45/255, 1
+    background_down: 'images/im.png'
+
+
+    ScrollView:
+        do_scroll_x: True
+        do_scroll_y: True
+
+        # height: 800
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, None
+            height: self.minimum_height
+            padding: 10
+            spacing: 10
+            # width: 400
+            canvas.before:
+                Color:
+                    rgba: 18/255, 39/255, 56/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Label:
+                id: type_label
+                text: ""
+                size_hint_y: None
+                halign: 'left'
+                valign: 'top'
+                height: 40
+                text_size: self.size
+
+
+            Label:
+                id: description_label
+                text: ""
+                # align text to the top left
+                halign: 'left'
+                valign: 'top'
+                size_hint_y: None
+                # text wrap
+                text_size: self.size
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 40
+                spacing: 10
+
+                Label:
+                    text: "Current Value : "
+                    size_hint_x: 0.3
+                    size_hint_y: None
+                    height: 40
+
+                TextInput:
+                    id: current_value_text_input
+                    text: str(root.value_to_display)
+                    size_hint_y: None
+                    height: 40
+                    readonly: True
+                    
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 40
+                spacing: 10
+
+                Label:
+                    text: "Select Type : "
+                    size_hint_x: 0.3
+                    size_hint_y: None
+                    height: 40
+
+                Spinner:
+                    size_hint: 1, None
+                    height: 40
+                    # pos_hint: {'center': (.5, .5)}
+                    text: "Array"
+                    values: "Array", "String", "Integer", "Float", "Boolean"
+                    sync_height: True
+                    sync_width: True
+                    # chnage transition
+                    transition: 'out_bounce'
+                    on_text: screen_manager_input.current = self.text
+                        
+            ScreenManager:
+                id: screen_manager_input
+                size_hint: 1, None
+                current: "Array"
+
+                Select_Input_Screen:
+                    root: root
+                    id : select_input_screen
+                
+                Array_Input_Screen:
+                    root: root
+                    id : array_input_screen
+
+                String_Input_Screen:
+                    root: root
+                    id : string_input_screen
+
+                Integer_Input_Screen:
+                    root: root
+                    id : integer_input_screen
+
+                Float_Input_Screen:
+                    root: root
+                    id : float_input_screen
+
+                Boolean_Input_Screen:
+                    root: root
+                    id : boolean_input_screen
+                
+
+
+<Select_Input_Screen>:
+    name: "Select"
+    Label:
+        text: "Select"
+        size_hint_y: None
+    
+<Array_Input_Screen>:
+
+
+    name: "Array"
+    Label:
+        text: "Array"
+        size_hint_y: None
+    Button:
+        text: "Open Excel File"
+        size_hint: 1, None
+        # size: self.texture_size
+        on_press: root.open_file_drop_popup(self)
+
+
+
+<String_Input_Screen>:
+    name: "String"
+    BoxLayout:
+        orientation: 'vertical'
+        Widget:
+            # This empty Widget serves as a flexible spacer
+            size_hint_y: 1
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 40
+            spacing: 10
+
+
+            Label:
+                text: "String:"
+                size_hint_x: 0.3
+                valign: 'middle'
+
+            TextInput:
+                hint_text: "Enter a string"
+                size_hint_y: None
+                height: 40
+                on_text: root.root.save_input(self.text, self.text)
+
+        Widget:  # Empty widget to push the BoxLayout to the center
+            size_hint_y: 1
+
+
+<Integer_Input_Screen>:
+    name: "Integer"
+    BoxLayout:
+        orientation: 'vertical'
+        Widget:
+            # This empty Widget serves as a flexible spacer
+            size_hint_y: 1
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 40
+            spacing: 10
+
+            Label:
+                text: "Integer:"
+                size_hint_x: 0.3
+                valign: 'middle'
+
+            TextInput:
+                id: integer_input
+                hint_text: "Enter an integer"
+                input_filter: 'int'
+                size_hint_y: None
+                height: 40
+                on_text: (root.root.save_input(int(self.text), str(self.text)) if self.text else root.root.save_input(0, "0"))
+
+        Widget:  # Empty widget to push the BoxLayout to the center
+            size_hint_y: 1
+
+<Float_Input_Screen>:
+    name: "Float"
+    BoxLayout:
+        orientation: 'vertical'
+        Widget:
+            # This empty Widget serves as a flexible spacer
+            size_hint_y: 1
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 40
+            spacing: 10
+
+            Label:
+                text: "Float:"
+                size_hint_x: 0.3
+                valign: 'middle'
+
+            TextInput:
+                hint_text: "Enter a float"
+                input_filter: 'float'
+                size_hint_y: None
+                height: 40
+                on_text: (root.root.save_input(float(self.text), str(self.text)) if self.text else root.root.save_input(0.0, "0.0"))
+
+        Widget:  # Empty widget to push the BoxLayout to the center
+            size_hint_y: 1
+
+<Boolean_Input_Screen>:
+    name: "Boolean"
+    BoxLayout:
+        orientation: 'vertical'
+        Widget:
+            # This empty Widget serves as a flexible spacer
+            size_hint_y: 1
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 40
+            spacing: 10
+
+
+            Label:
+                text: "Boolean:"
+                size_hint_x: 0.3
+                valign: 'middle'
+
+            CheckBox:
+                id: checkbox
+                size_hint_x: 1
+                size_hint_y: None
+                height: 40
+                on_active: root.root.save_input(checkbox.active, str(checkbox.active))
+
+
+        Widget:  # Empty widget to push the BoxLayout to the center
+            size_hint_y: 1
+
+
+
+
+
+# <FileSavePopup>:
+#     title: 'Select File to Save'
+#     size_hint: .8, .8
+
+#     BoxLayout:
+            
+#         orientation: 'vertical'
+
+#         BoxLayout:
+#             orientation: 'horizontal'
+#             size_hint_y: None
+#             height: 50
+#             spacing: 10
+
+#             ToggleButton:
+#                 text: 'Icon'
+#                 state: 'down'
+#                 group: 'filechooser'
+#                 on_release: filechooser_save.view_mode = 'icon'
+
+#             ToggleButton:
+#                 text: 'List'
+#                 group: 'filechooser'
+#                 on_release: filechooser_save.view_mode = 'list'
+
+#         FileChooser:
+#             id: filechooser_save
+#             path: '.'
+#             filters: ['*.xlsx']
+#             on_selection : root.file_selection(self.path, self.selection)
+#             FileChooserIconLayout
+#             FileChooserListLayout
+#         BoxLayout:
+#             orientation: 'vertical'
+
+#             # Filename and directory input
+#             TextInput:
+#                 id: filename_input
+#                 hint_text: 'Enter filename or full path'
+#                 multiline: False
+#                 on_text: root.update_path_preview()
+
+#             # Dropdown for available extensions
+#             Spinner:
+#                 id: extension_spinner
+#                 text: '.xlsx'
+#                 values: ['.xlsx', '.csv']
+#                 on_text: root.update_path_preview()
+
+#             # Path preview label
+#             Label:
+#                 id: path_preview
+#                 text: filechooser_save.path + "\\" + filename_input.text + extension_spinner.text
+
+#             # Button box
+#             BoxLayout:
+#                 orientation: 'horizontal'
+#                 spacing: 10
+
+#                 Button:
+#                     text: 'Cancel'
+#                     on_release: root.dismiss()
+
+#                 Button:
+#                     text: 'Save'
+#                     on_release: root.save_file()
+
+
+<FileSavePopup>:
+    title: 'Select File to Save'
+    size_hint: .5, .75
+    background: "white.png"
+    background_color: 21/255, 35/255, 45/255, 1
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            ToggleButton:
+                text: 'Icon'
+                state: 'down'
+                group: 'filechooser'
+                background_normal: 'images/normal_tab.png'
+                background_down: 'images/im.png'
+                on_release: filechooser_save.view_mode = 'icon'
+                size_hint_x: 0.5
+
+            ToggleButton:
+                text: 'List'
+                group: 'filechooser'
+                background_normal: 'images/normal_tab.png'
+                background_down: 'images/im.png'
+                on_release: filechooser_save.view_mode = 'list'
+                size_hint_x: 0.5
+
+        # This FileChooser takes up all available space
+        FileChooser:
+            id: filechooser_save
+            path: '.'
+            filters: ['*.xlsx']
+            on_selection: root.file_selection(self.path, self.selection)
+            size_hint_y: 1  # Allow the FileChooser to expand
+            FileChooserIconLayout
+            FileChooserListLayout
+
+        Label:
+            id: path_preview
+            text: filechooser_save.path + "\\" + filename_input.text + extension_spinner.text
+            size_hint_y: None
+            height: 40
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 10
+            size_hint_y: None
+            height: 40
+
+            TextInput:
+                id: filename_input
+                hint_text: 'Enter filename or full path'
+                multiline: False
+                size_hint_x: 0.8  # Adjusted for combined TextInput and Spinner to fill space
+                padding_y: (self.height - self.line_height) / 2
+
+            Spinner:
+                id: extension_spinner
+                text: '.xlsx'
+                values: ['.xlsx', '.csv']
+                size_hint_x: 0.2
+                background_normal: 'images/im.png'
+                background_down: 'images/im.png'
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: 'Cancel'
+                background_normal: 'images/im.png'
+                background_down: 'images/im.png'
+                on_release: root.dismiss()
+                size_hint_x: 0.5
+
+            Button:
+                text: 'Save'
+                background_normal: 'images/im.png'
+                background_down: 'images/im.png'
+                on_release: root.save_file()
+                size_hint_x: 0.5
+
+
+
+# <FileDropPopup>:
+#     title: 'Drop Files Here'
+#     size_hint: .8, .8
+
+#     BoxLayout:
+#         orientation: 'horizontal'
+#         spacing: 10
+#         padding: 10
+
+#         BoxLayout:
+#             id: left_file_drop_popup
+#             orientation: 'vertical'
+#             # spacing: 10
+
+
+#             # Label:
+#             #     id: drop_file_label
+#             #     text: 'Drop files here :)'
+#             #     size_hint_y: None
+#             #     height: 50
+#             #     halign: 'center'
+
+#             ScrollView:
+                
+#                 # increase z index
+#                 z: 10
+                
+#                 do_scroll_y: True
+#                 do_scroll_x: True
+#                 Scatter:
+#                     do_rotation: False
+#                     do_scale: False
+#                     do_translation: False
+#                     size_hint_y: None
+#                     size: excel_tree_view.size
+
+                    
+#                     ExcelTreeView:  
+#                         excel_tree_view_header: excel_tree_view_header
+#                         root_window: root
+#                         id : excel_tree_view
+#                         width: left_file_drop_popup.width
+#                         height: self.minimum_height
+
+
+#             BoxLayout:
+#                 orientation:'horizontal'
+#                 size_hint_y: None
+#                 height: 40
+#                 size_hint_x: 1
+#                 spacing: 10
+
+#                 Label:
+#                     text: 'Selected Columns :'
+#                     size_hint_x: None
+#                     width: 150
+
+#                 ScrollView:
+#                     do_scroll_y: False
+#                     do_scroll_x: True
+#                     size_hint_x: 1
+#                     size_hint_y: None
+#                     height: 40
+#                     valign: 'middle'
+#                     halign: 'left'
+#                     # increase z index
+#                     # z: 10
+
+#                     BoxLayout:
+#                         orientation: 'horizontal'
+#                         spacing: 10
+#                         size_hint_y: None
+#                         height: 40
+#                         valign: 'middle'
+#                         halign: 'left'
+#                         size_hint_x: None
+#                         width: self.minimum_width
+#                         # width: 1000
+
+#                         id: excel_tree_view_header
+
+                      
+
+
+            
+#         BoxLayout:
+            
+#             orientation: 'vertical'
+
+#             BoxLayout:
+#                 orientation: 'horizontal'
+#                 size_hint_y: None
+#                 height: 50
+#                 spacing: 10
+
+#                 ToggleButton:
+#                     text: 'Icon'
+#                     state: 'down'
+#                     group: 'filechooser'
+#                     on_release: filechooser.view_mode = 'icon'
+
+#                 ToggleButton:
+#                     text: 'List'
+#                     group: 'filechooser'
+#                     on_release: filechooser.view_mode = 'list'
+
+#             FileChooser:
+#                 id: filechooser
+#                 path: '.'
+#                 filters: ['*.xlsx', '*.csv']
+#                 FileChooserIconLayout
+#                 FileChooserListLayout
+
+#             BoxLayout:
+#                 orientation: 'horizontal'
+#                 size_hint_y: None
+#                 height: 30
+#                 spacing: 10
+
+#                 Button:
+#                     text: 'Cancel'
+#                     on_release: root.dismiss()
+
+#                 Button:
+#                     text: 'Load'
+#                     on_release: root.load(filechooser.path, filechooser.selection)
+#                 Button:
+#                     text: "Submit"
+#                     on_release: root.submit()
+            
+<FileDropPopup>:
+    title: 'Drop Files Here'
+    size_hint: .8, .8
+    background: "white.png"
+    background_color: 21/255, 35/255, 45/255, 1
+    auto_dismiss: False
+
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 10
+        padding: 20
+
+        BoxLayout:
+            id: left_file_drop_popup
+            orientation: 'vertical'
+            spacing: 10
+
+            ScrollView:
+                do_scroll_y: True
+                do_scroll_x: False
+                Scatter:
+                    do_rotation: False
+                    do_scale: False
+                    do_translation: False
+                    size_hint_y: None
+                    size: excel_tree_view.size
+                    
+                    ExcelTreeView:  
+                        excel_tree_view_header: excel_tree_view_header
+                        root_window: root
+                        id: excel_tree_view
+                        width: left_file_drop_popup.width
+                        height: self.minimum_height
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 40
+                spacing: 10
+                # size_hint_x: 1
+
+                Label:
+                    text: 'Selected Columns :'
+                    size_hint_x: None
+                    width: 150
+
+                ScrollView:
+                    do_scroll_y: False
+                    do_scroll_x: True
+                    size_hint_x: 1
+                    # size_hint_y: None
+                    # height: 40
+                    # valign: 'middle'
+                    # halign: 'left'
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        spacing: 10
+                        # height: 40
+                        # valign: 'middle'
+                        # halign: 'left'
+
+                        size_hint_x: None
+                        width: self.minimum_width
+                        id: excel_tree_view_header
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 50
+                spacing: 10
+
+                ToggleButton:
+                    text: 'Icon'
+                    state: 'down'
+                    group: 'filechooser'
+                    background_normal: 'images/normal_tab.png'
+                    background_down: 'images/im.png'
+                    on_release: filechooser.view_mode = 'icon'
+
+                ToggleButton:
+                    text: 'List'
+                    group: 'filechooser'
+                    background_normal: 'images/normal_tab.png'
+                    background_down: 'images/im.png'
+                    on_release: filechooser.view_mode = 'list'
+
+            FileChooser:
+                id: filechooser
+                path: '.'
+                filters: ['*.xlsx', '*.csv']
+                size_hint_y: 0.8
+                FileChooserIconLayout
+                FileChooserListLayout
+
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 50
+                spacing: 10
+
+                Button:
+                    text: 'Cancel'
+                    background_normal: 'images/im.png'
+                    background_down: 'images/im.png'
+                    on_release: root.dismiss()
+
+                Button:
+                    text: 'Load'
+                    background_normal: 'images/im.png'
+                    background_down: 'images/im.png'
+                    on_release: root.load(filechooser.path, filechooser.selection)
+
+                Button:
+                    text: "Submit"
+                    background_normal: 'images/im.png'
+                    background_down: 'images/im.png'
+                    on_release: root.submit()
+
+
+
+<Model_Tabbed_Panel_Item>:
+
+
+    input_tabbed_panel: input_tabbed_panel
+    close_button: close_button
+
+    # font_size: 20
+    # font_name: 'Arial'
+    # # text : "Model Name"
+    background_normal: 'images/normal_tab.png'
+    # background_color: 21/255, 35/255, 45/255, 1
+    background_down: 'images/im.png'
+
+    # canvas.before:
+    #     Color:
+    #         rgba: 0, 1, 0, 1
+    #     Rectangle:
+    #         pos: self.pos
+    #         size: self.size
+   
+    # ResizableSections:
+    BoxLayout:
+        orientation: 'horizontal'
+
+        Splitter:
+            sizable_from: 'right'
+            strip_size: 5
+            rescale_with_parent: True
+            # set min and max size
+            max_size: 1000
+            min_size: 700
+            size_hint_x: 1
+
+
+            # chnage image
+            # background_normal: 'im.png'
+
+            BoxLayout:
+                orientation: "vertical"
+                size: root.size
+                size_hint: 1, 1
+                # Change the background color of the BoxLayout
+                # canvas.before:
+                #     Color:
+                #         rgba: 0, 0, 0, 1
+                #     Rectangle:
+                #         pos: self.pos
+                #         size: self.size
+                GridLayout:
+                    cols: 4
+                    size_hint_y: 0.1
+                    height: 40
+                    canvas:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: [self.x, self.y, self.x + self.width, self.y]
+                            width: 2
+                            cap: 'square'
+                            joint: 'round'
+                    
+
+                    Label:
+                        id : model_name_label
+                        text: "Model Name"
+                        size_hint_x: 1
+                        # Change the background color of the BoxLayout
+                        canvas.before:
+                            Color:
+                                rgba: 18/255, 39/255, 56/255, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                    
+
+                    Button:
+                        size_hint_x: 0.1
+                        # text: "x"
+                        # font_name: 'Arial'
+                        # font_size: 30
+                        # size_hint_x: 0.1
+                        canvas:
+                            Color:
+                                rgba: 0, 0, 0, 1
+                            Line:
+                                points: [self.x, self.y, self.x, self.y + self.height]
+                                width: 1
+                                cap: 'square'
+                                joint: 'round'
+                        # Change the background color of the BoxLayout
+                        canvas.before:
+                            Color:
+                                rgba: 25/255, 53/255, 73/255, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        # color: 1 , 0, 0, 1
+                        # background_color: 18/255, 39/255, 56/255, 1
+                        background_normal: 'images/save-32.png'
+                        background_down: 'images/save-icon.png'
+                        size_hint_x: None
+                        width: 45
+                        halign: 'center'
+                        valign: 'middle'
+                        # height: self.width
+                        # On press, remove the current tab
+                        on_press: root.save_prediction_in_excel()
+                        # Change the background color of the BoxLayout
+                    Button:
+                        # text: "x"
+                        # font_name: 'Arial'
+                        # font_size: 30
+                        size_hint_x: 0.1
+                        canvas:
+                            Color:
+                                rgba: 0, 0, 0, 1
+                            Line:
+                                points: [self.x, self.y, self.x, self.y + self.height]
+                                width: 1
+                                cap: 'square'
+                                joint: 'round'
+                        # Change the background color of the BoxLayout
+                        canvas.before:
+                            Color:
+                                rgba: 25/255, 53/255, 73/255, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        # color: 1 , 0, 0, 1
+                        # background_color: 18/255, 39/255, 56/255, 1
+                        background_normal: 'images/run-removebg-preview.png'
+                        # background_down: 'run.png'
+
+                        size_hint_x: None
+                        width: 45
+                        # height: 40
+                        # On press, remove the current tab
+                        on_press: root.run_model()
+                        # Change the background color of the BoxLayout
+                    Button:
+                        # text: "x"
+                        # font_name: 'Arial'
+                        # font_size: 30
+
+                        id : close_button
+                        size_hint_x: 0.1
+                        canvas:
+                            Color:
+                                rgba: 0, 0, 0, 1
+                            Line:
+                                points: [self.x, self.y, self.x, self.y + self.height]
+                                width: 1
+                                cap: 'square'
+                                joint: 'round'
+                        # Change the background color of the BoxLayout
+                        canvas.before:
+                            Color:
+                                rgba: 25/255, 53/255, 73/255, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        # color: 1 , 0, 0, 1
+                        # background_color: 18/255, 39/255, 56/255, 1
+                        background_normal: 'images/close_cross-removebg-preview.png'
+                        background_down: 'images/close_cross-removebg-preview.png'
+
+                        size_hint_x: None
+                        width: 45
+                        # height: 40
+                        # On press, remove the current tab
+                        on_press: app.root.ids.model_tabbed_panel.on_close_button_tap(root)
+                        # Change the background color of the BoxLayout
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: 1.9
+                    height: 40
+                    TextInput:
+                        id: summary_label
+                        text: ""
+                        # text wrap
+                        text_size: self.size
+                        font_name: 'Consolas'
+                        readonly: True
+                        halign: 'center'
+                        valign: 'middle'
+                        # size_hint_y: None
+                        # height: self.texture_size[1]
+                        # height: 40
+                        # pos_hint: {'x': 0.1, 'y': 0.5}
+                        # size_hint_x: 0.8
+                        # canvas.before:
+                        #     Color:
+                        #         rgba: 0, 0, 0, 1
+                        #     Rectangle:
+                        #         pos: self.pos
+                        #         size: self.size
+                        
+                    # Button:
+                    #     id: label_2
+                    #     text: ""
+                    #     size_hint_x: 1
+                    #     on_press: root.generate_input()
+                    #     background_normal: 'save-icon.png'
+                    #     background_down: 'save-icon.png'
+                    
+        BoxLayout:
+            orientation: 'vertical'
+
+            size_hint_x: 1
+
+            Splitter:
+                sizable_from: 'bottom'
+                strip_size: 5
+                rescale_with_parent: True
+                # max_size: 200
+                # min_size: 100
+                vertical: 1
+                BoxLayout:
+                    orientation: 'vertical'
+
+
+                    Label:
+                        text: 'Model Inputs'
+                        size_hint: 1, None
+                        height: 40
+
+                        canvas.before:
+                            Color:
+                                rgba: 18/255, 39/255, 56/255, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+
+                    ScrollView:
+                        
+                        # vertical scroll view, so the content can be scrolled
+                        # horizontally and not vertically
+
+                        do_scroll_x: True
+                        do_scroll_y: True
+
+
+
+                        Input_Tabbed_Panel:
+                            id: input_tabbed_panel
+                           
+                            # background_color: 21/255, 35/255, 45/255, 1
+                            # color: 170/255, 170/255, 170/255, 1
+                            # font_size: 20
+                            # canvas.before:
+                            #     Color:
+                            #         rgba: 1, 1, 1, 1
+                            #     Rectangle:
+                            #         pos: self.pos
+                            #         size: self.size
+                            
+                                
+                                         
+
+
+
+                # ScrollView:
+                    
+                #     # vertical scroll view, so the content can be scrolled
+                #     # horizontally and not vertically
+
+                #     id: scroll_view
+                #     do_scroll_x: False
+                #     do_scroll_y: True
+
+
+
+
+
+            
+            BoxLayout:
+                orientation: 'vertical'
+
+
+                Label:
+                    text: 'Model Informaton'
+                    size_hint: 1, None
+                    height: 40
+
+                    canvas.before:
+                        Color:
+                            rgba: 18/255, 39/255, 56/255, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                # ScrollView:
+                    
+                #     # vertical scroll view, so the content can be scrolled
+                #     # horizontally and not vertically
+
+                #     do_scroll_x: True
+                #     do_scroll_y: True
+
+
+                #     BoxLayout:
+                        
+                #         size_hint : 1, None
+
+                #         height: label_4.height
+                #         # width: label_4.width
+                    
+
+                RstDocument:
+                    id: label_4
+                    text: ''
+                    # size_hint: 1, None
+                    # size: self.texture_size
+                    # height: self.texture_size[1]
+                    # pos_hint: { 'center_y': .5}
+                    # Disable the editing of the TextInput
+                    readonly: True
+                    # background_color: 21/255, 35/255, 45/255, 1
+                    # foreground_color: 170/255, 170/255, 170/255, 1
+                    # canvas.before:
+                    #     Color:
+                    #         rgba: 170/255, 170/255, 170/255, 1
+                    #     Rectangle:
+                    #         pos: self.pos
+                    #         size: self.size
+    # BoxLayout:
+    #     orientation: "vertical"
+    #     size: root.size
+    #     size_hint: 1, 1
+    #     # Change the background color of the BoxLayout
+    #     # canvas.before:
+    #     #     Color:
+    #     #         rgba: 0, 0, 0, 1
+    #     #     Rectangle:
+    #     #         pos: self.pos
+    #     #         size: self.size
+    #     GridLayout:
+    #         cols: 2
+    #         size_hint_y: 0.1
+    #         height: 40
+    #         canvas:
+    #             Color:
+    #                 rgba: 0, 0, 0, 1
+    #             Line:
+    #                 points: [self.x, self.y, self.x + self.width, self.y]
+    #                 width: 2
+    #                 cap: 'square'
+    #                 joint: 'round'
+            
+
+    #         Label:
+    #             id : model_name_label
+    #             text: "Model Name"
+    #             size_hint_x: 1
+    #             # Change the background color of the BoxLayout
+    #             canvas.before:
+    #                 Color:
+    #                     rgba: 18/255, 39/255, 56/255, 1
+    #                 Rectangle:
+    #                     pos: self.pos
+    #                     size: self.size
+
+    #         Button:
+    #             text: "x"
+    #             font_name: 'Arial'
+    #             font_size: 30
+    #             size_hint_x: 0.1
+    #             canvas:
+    #                 Color:
+    #                     rgba: 0, 0, 0, 1
+    #                 Line:
+    #                     points: [self.x, self.y, self.x, self.y + self.height]
+    #                     width: 1.5
+    #                     cap: 'square'
+    #                     joint: 'round'
+    #             # Change the background color of the BoxLayout
+    #             canvas.before:
+    #                 Color:
+    #                     rgba: 25/255, 53/255, 73/255, 1
+    #                 Rectangle:
+    #                     pos: self.pos
+    #                     size: self.size
+    #             color: 1 , 0, 0, 1
+    #             background_color: 1, 1, 1, 0
+
+    #             width: 50
+    #             height: 40
+    #             size_hint_x: None
+    #             # On press, remove the current tab
+    #             on_press: app.root.ids.model_tabbed_panel.on_close_button_tap(root)
+    #             # Change the background color of the BoxLayout
+    #     BoxLayout:
+    #         orientation: "vertical"
+    #         size_hint_y: 1.9
+    #         height: 40
+    #         Label:
+    #             id: label_1
+    #             text: ""
+    #             size_hint_x: 1
+                
+    #         Label:
+    #             id: label_2
+    #             text: ""
+    #             size_hint_x: 1
+
+    #         Label:
+    #             id: label_3
+    #             text: ""
+    #             size_hint_x: 5
+    
+
+# <TopMenuBar>:
+# # ActionBar:
+
+
+
+#     pos_hint: {'top':1}
+#     ActionView:
+#         canvas.before:
+#             Color:
+#                 rgba: 15/255, 20/255, 30/255, 1
+#             Rectangle:
+#                 pos: self.pos
+#                 size: self.size
+#         use_separator: True
+#         ActionPrevious:
+#             title: 'Action Bar'
+#             with_previous: False
+#             app_icon: 'run-removebg-preview.png'
+#         ActionOverflow:
+#         ActionButton:
+#             text: 'Btn0'
+#             icon: 'atlas://data/images/defaulttheme/audio-volume-high'
+#         ActionButton:
+#             text: 'Btn1'
+#         ActionButton:
+#             text: 'Btn2'
+#         ActionGroup:
+#             text: 'Project'
+#             ActionButton:
+#                 text: 'Save Project'
+#             ActionButton:
+#                 text: 'Load Project'
+#         ActionGroup:
+#             dropdown_width: 100
+#             text: 'Group 2'
+#             ActionButton:
+#                 text: 'Btn5'
+#             ActionButton:
+#                 text: 'Btn6'
+#             ActionButton:
+#                 text: 'Btn7'
+<CreateNewProjectPopup>:
+    title: 'Create New Project'
+    size_hint: .5, .75
+    background : "white.png"
+    background_color: 21/255, 35/255, 45/255, 1
+
+
+    BoxLayout:
+            
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            ToggleButton:
+                text: 'Icon'
+                state: 'down'
+                group: 'filechooser'
+                background_normal: 'images/normal_tab.png'
+                background_down: 'images/im.png'
+                on_release: filechooser_save.view_mode = 'icon'
+                size_hint_x : 0.5
+
+            ToggleButton:
+                text: 'List'
+                group: 'filechooser'
+                background_normal: 'images/normal_tab.png'
+                background_down: 'images/im.png'
+                on_release: filechooser_save.view_mode = 'list'
+                size_hint_x : 0.5
+
+        FileChooser:
+            id: filechooser_save
+            path: '.'
+            filters: ["*.something"]
+            on_selection : root.file_selection(self.path, self.selection)
+            size_hint_y: 0.6
+            FileChooserIconLayout
+            FileChooserListLayout
+
+        # Filename and directory input
+        TextInput:
+            id: project_name_input
+            hint_text: 'Enter Project Name'
+            multiline: False
+            size_hint_y: None
+            height: 40
+            padding_y: (self.height - self.line_height) / 2
+
+
+       
+        # Button box
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+
+            Button:
+                text: 'Cancel'
+                on_release: root.dismiss()
+                background_normal: 'images/im.png'
+                background_down: 'images/im.png'
+                size_hint_x: 0.5
+            Button:
+                id : save_button
+                text: ''
+                on_release: root.create_project()
+                background_normal: 'images/im.png'
+                background_down: 'images/im.png'
+                size_hint_x: 0.5
+
+
+
+<OpenProjectPopup>:
+    title: 'Open Project'
+    size_hint: .5, .75
+    background: "white.png"
+    background_color: 21/255, 35/255, 45/255, 1
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            ToggleButton:
+                text: 'Icon'
+                state: 'down'
+                group: 'filechooser'
+                background_normal: 'images/normal_tab.png'
+                background_down: 'images/im.png'
+                on_release: filechooser_save.view_mode = 'icon'
+                size_hint_x: 0.5
+
+            ToggleButton:
+                text: 'List'
+                group: 'filechooser'
+                background_normal: 'images/normal_tab.png'
+                background_down: 'images/im.png'
+                on_release: filechooser_save.view_mode = 'list'
+                size_hint_x: 0.5
+
+        FileChooser:
+            id: filechooser_save
+            path: '.'
+            filters: ["*.something"]
+            on_selection: root.file_selection(self.path, self.selection)
+            size_hint_y: 0.6
+            directory: True
+            FileChooserIconLayout
+            FileChooserListLayout
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: 'Cancel'
+                background_normal: 'images/im.png'
+                background_down: 'images/im.png'
+                on_release: root.dismiss()
+                size_hint_x: 0.5
+
+            Button:
+                text: 'Open'
+                background_normal: 'images/im.png'
+                background_down: 'images/im.png'
+                on_release: root.open_project()
+                size_hint_x: 0.5
+
+
+
+<MainWidget>:
+    BoxLayout:
+        orientation: "vertical"
+        size: root.size
+        # BoxLayout: # Old 
+        #     # Change the background color of the BoxLayout
+        #     canvas.before:
+        #         Color:
+        #             rgba: 1, 1, 1, 0.3
+        #         Rectangle:
+        #             pos: self.pos
+        #             size: self.size
+        #     size_hint_y: None
+        #     height: 40
+        #     Spinner:
+        #         id: file_options_spinner
+        #         # set width to be 300 pixels
+        #         size_hint_x: None
+        #         width: 300
+        #         text: "File"
+        #         values: root.file_options_list
+        #         on_text: root.file_options_selected(file_options_spinner.text)
+        #         halign: 'right'  # Align the text to the right
+        #         valign: 'middle'  # Vertically center the text
+        #         padding_x: 5  # Add padding to the left and right of the text
+        #         # Change the background color of the Spinner
+        #         canvas.before:
+        #             Color:
+        #                 rgba: 0, 0, 0, 1
+        #             Rectangle:
+        #                 pos: self.pos
+        #                 size: self.size
+        TopMenuBar:
+            id: top_menu_bar
+            size_hint_y: None
+            height: 60
+
+            pos_hint: {'top':1}
+            ActionView:
+                canvas.before:
+                    Color:
+                        rgba: 15/255, 20/255, 30/255, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                use_separator: True
+                ActionPrevious:
+                    # title: "Untitled Project"
+                    # font_size: 20
+                    with_previous: False
+
+                    # width: 200
+                    # size_hint_x: None
+                    app_icon: 'images/run-removebg-preview.png'
+
+
+                ActionButton:
+                    # Label:
+                    id : action_previous
+                    font_name: 'Consolas'
+                    text: "Untitled Project"
+                    size_hint_x: 10
+                    font_size: 20
+                    # Change the background color of the BoxLayout
+                    canvas.before:
+                        Color:
+                            rgba: 18/255, 39/255, 56/255, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    # Left align the text
+                    halign: 'left'
+                ActionOverflow:
+
+                ActionGroup:
+                    text: 'Project'
+                    font_name: 'Consolas'
+
+                    ActionButton:
+                        text: 'Create Project'
+                        font_name: 'Consolas'
+                        on_press: root.openCreateNewProjectPopup()
+                    ActionButton:
+                        text: 'Save Project'
+                        font_name: 'Consolas'
+                        on_press: root.save_project(root.CURRENT_PROJECT_DIR)
+                    ActionButton:
+                        text: 'Save As Project'
+                        font_name: 'Consolas'
+                        on_press: root.save_as_project()
+                    ActionButton:
+                        text: 'Load Project'
+                        font_name: 'Consolas'
+                        on_press: root.open_project_popup()
+                
+
+
+
+        BoxLayout:
+            orientation: "horizontal"
+            # set width to be full width of window
+            # size: root.size
+            # # set height to be 1/4 of window
+            # size_hint_y: 1
+            # # inccrease width of the TreeView
+            # size_hint_x: 1
+
+
+            Splitter:
+                sizable_from: 'right'
+                size_hint_x: None
+                min_size: 300
+                max_size: 500
+                strip_size: 5
+
+                ScrollView:
+                    width: 500
+                    id: scrollview
+                    size_hint_x: 3
+                    # increase z index
+                    z: 10
+                    
+                    do_scroll_y: True
+                    do_scroll_x: True
+                    # Allow the ScrollView to scroll vertically
+                    canvas.before:
+                        Color:
+                            rgba: 21/255, 35/255, 45/255, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    
+                    Scatter:
+                        do_rotation: False
+                        do_scale: False
+                        do_translation: False
+                        size: left_excel_panel.size
+                        size_hint_y: None
+
+                        Left_Excel_Panel: # Inherted the TreeView class
+                            id : left_excel_panel
+                            model_tabbed_panel: model_tabbed_panel
+                            # Set the background color of the TreeView
+                            width: scrollview.width
+                            height: self.minimum_height
+                            
+                            # Set the background color of the TreeViewItem
+                            background_color: 1, 1, 1, 1
+                            # Set the color of the TreeViewItem when selected
+                            selected_color: 0, 0, 0, 1
+                            # Set the color of the TreeViewItem when selected
+                            indent_level: 20
+                            # Set the color of the TreeViewItem when selected
+                            indent_offset: 20
+                            # Set the color of the TreeViewItem when selected
+                            indent_width: 50
+                            # Set the color of the TreeViewItem when selected
+                            show_expand: True
+                            # Set the color of the TreeViewItem when selected
+                            hide_root: True
+                            # Set the color of the TreeViewItem when selected
+                            show_icons: True
+                            # Set the color of the TreeViewItem when selected
+                            show_lines: True
+                            # Set the color of the TreeViewItem when selected
+                            allow_select: True
+                            # Set the color of the TreeViewItem when selected
+                            allow_multiple_selection: False
+                            # Set the color of the TreeViewItem when selected
+                            allow_reorder: True
+                            # Set the text color of the TreeViewItem
+                            text_color: 0, 0, 0, 1
+                            # Scrollable
+                            # scroll_type: ['bars', 'content']
+                            
+                        
+                        # FileChooserListView:
+                        #     id: Analytical_file_chooser
+                        #     path: root.Analytical_Folder_dir
+                        #     # Dont show hidden files
+                        #     show_hidden: False
+                        #     # Set the filters to only show files with the following extensions
+                        #     filters: ['*.py']
+                        #     # Expanded by default
+                        #     multiselect: True
+                            
+                            
+                        #     on_selection: root.on_Analytical_selection(Analytical_file_chooser.selection)
+                                            
+        
+            BoxLayout:
+                orientation: "vertical"
+                # Set width to be 1/4 of window
+                size_hint_x: 6
+
+                Model_Tabbed_Panel:
+                    id: model_tabbed_panel
+
+                    main_widget: root
+
+                    do_default_tab: False
+                    tab_width: 150
+                    tab_height: 40
+                    tab_pos: 'top_left'
+                    size_hint_y: 1
+                    size_hint_x: 1
+                    # background_color: 21/255, 35/255, 45/255, 1
+                    # color: 170/255, 170/255, 170/255, 1
+                    # font_size: 20
+                    # canvas.before:
+                    #     Color:
+                    #         rgba: 1, 1, 1, 1
+                    #     Rectangle:
+                    #         pos: self.pos
+                    #         size: self.size
+            
+
+            # BoxLayout:
+            #     orientation: "vertical"
+            #     # Set width to be 1/4 of window
+            #     size_hint_x: 5
+            #     Label:
+            #         text: "Frame 2"
+            #     Button:
+            #         text:'Output'
