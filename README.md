@@ -4,8 +4,17 @@
 
 This project is designed with the flexibility to incorporate custom models for analytical purposes, focusing on streamlining the process of model runs within a structured environment. By utilizing Python, the project facilitates an efficient workflow from model integration to execution and analysis, ensuring a comprehensive approach to data-driven insights.
 
+## Screenshots
+
 ![ScreenShot](images/Screenshot_2024-06-24_170144.png)
 
+![ScreenShot](images/Screenshot_2024-07-05_181352.png)
+
+![ScreenShot](images/Screenshot_2024-07-05_181414.png)
+
+![ScreenShot](images/Screenshot_2024-07-05_181426.png)
+
+![ScreenShot](images/Screenshot_2024-07-05_181439.png)
 
 ## Installation
 
