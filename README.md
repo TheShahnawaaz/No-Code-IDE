@@ -4,6 +4,9 @@
 
 This project is designed with the flexibility to incorporate custom models for analytical purposes, focusing on streamlining the process of model runs within a structured environment. By utilizing Python, the project facilitates an efficient workflow from model integration to execution and analysis, ensuring a comprehensive approach to data-driven insights.
 
+![ScreenShot](images/Screenshot 2024-06-24 170144.png)
+
+
 ## Installation
 
 To set up the project environment and install necessary dependencies, navigate to the project's root directory and run the following command:
