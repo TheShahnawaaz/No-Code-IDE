@@ -32,9 +32,11 @@ Alternatively, users can use the provided `setup.bat` file to install the depend
 
 With the environment set up, you can initiate the project by executing the main script from the terminal:
 
-bashCopy code
 
-`python main.py`
+
+```bash
+python main.py
+```
 
 This command runs the `main.py` script, which is the entry point of the project, orchestrating the workflow and interactions.
 
